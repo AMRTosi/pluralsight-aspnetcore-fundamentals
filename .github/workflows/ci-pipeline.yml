@@ -45,6 +45,12 @@ jobs:
           dotnet publish -c Release --output ${{ github.workspace }}/publish
       - name: List published files
         run: ls ${{ github.workspace }}/publish
+      
+        # SonarQube Scan
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@4.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
