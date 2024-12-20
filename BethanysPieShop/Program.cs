@@ -3,10 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllersWithViews();
+
 builder.Services.AddScoped<IPieRepository, PieRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-builder.Services.AddControllersWithViews();
+// lambda expression to create a new instance of the ShoppingCart class (fabric method)
+builder.Services.AddScoped<IShoppingCart, ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+
+builder.Services.AddSession(); 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddDbContext<BethanysPieShopDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BethanysPieShopDbContextConnection"));
 });
@@ -14,6 +21,7 @@ builder.Services.AddDbContext<BethanysPieShopDbContext>(options => {
 var app = builder.Build();
 
 app.UseStaticFiles();
+app.UseSession();
 
 if (app.Environment.IsDevelopment())
 {
