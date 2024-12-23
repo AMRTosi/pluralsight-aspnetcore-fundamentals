@@ -42,15 +42,19 @@ jobs:
         run: |
           dotnet restore
           dotnet build --configuration Release
-          dotnet publish -c Release --output ${{ github.workspace }}/publish
-      - name: List published files
-        run: ls ${{ github.workspace }}/publish
+          dotnet publish -c Release --output ${{ github.workspace }}/publish   
+      
+      # Run tests and collect coverage
+      - name: Run tests and collect coverage
+        run: |
+          dotnet test --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/TestResults   
       
         # SonarQube Scan
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4.1.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_OPTS: "-Dsonar.cs.vscoveragexml.reportsPaths=${{ github.workspace }}/TestResults/**/coverage.cobertura.xml"
           
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
