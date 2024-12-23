@@ -45,7 +45,7 @@ jobs:
           dotnet restore
           dotnet tool install --global dotnet-coverage
           dotnet tool install --global dotnet-sonarscanner --version 9.0.2
-          dotnet sonarscanner begin /k:"AMRTosi_pluralsight-aspnetcore-fundamentals" /o:"AMRTosi" /d:sonar.token="f97d9dae9c74d696633e98b737ce3c17e061339f" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml"
+          dotnet sonarscanner begin /k:"AMRTosi_pluralsight-aspnetcore-fundamentals" /o:"amrtosi" /d:sonar.token="f97d9dae9c74d696633e98b737ce3c17e061339f" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml"
           dotnet build --configuration Release --no-incremental
           dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
           dotnet sonarscanner end /d:sonar.token="f97d9dae9c74d696633e98b737ce3c17e061339f"
