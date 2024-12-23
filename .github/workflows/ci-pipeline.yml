@@ -40,30 +40,19 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }} 
       
       # Run dotnet build and publish
-      - name: dotnet build and publish
+      - name: SonarScanner, build, test and coverage report
         run: |
           dotnet restore
           dotnet tool install --global dotnet-coverage
           dotnet tool install --global dotnet-sonarscanner --version 9.0.2
-            dotnet sonarscanner begin 
-            /k:"${{ env.SONAR_PROJECT_KEY }}"
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-            /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml"
+          dotnet sonarscanner begin /k:"AMRTosi_pluralsight-aspnetcore-fundamentals" /o:"AMRTosi" /d:sonar.token="f97d9dae9c74d696633e98b737ce3c17e061339f" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml"
           dotnet build --configuration Release --no-incremental
           dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
-          dotnet sonarscanner end /d:sonar.token=${{ secrets.SONAR_TOKEN }}
-          dotnet publish -c Release --output ${{ github.workspace }}/publish   
+          dotnet sonarscanner end /d:sonar.token="f97d9dae9c74d696633e98b737ce3c17e061339f"
       
-      # Run tests and collect coverage
-      - name: Run tests and collect coverage
-        run: |          
-          dotnet test --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/TestResults   
-      
-      # SonarQube Scan
-      #- name: SonarQube Scan
-      #  uses: SonarSource/sonarqube-scan-action@v4.1.0
-      #  env:
-      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # Publish
+      - name: 'Publish the project'
+        run: dotnet publish -c Release --output ${{ github.workspace }}/publish
           
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
