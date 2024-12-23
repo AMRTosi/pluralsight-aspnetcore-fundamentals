@@ -47,7 +47,8 @@ jobs:
       # Run tests and collect coverage
       - name: Run tests and collect coverage
         run: |
-          dotnet test --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/TestResults   
+          dotnet test --collect:"XPlat Code Coverage" --results-directory ${{ github.workspace }}/TestResults
+          reportgenerator -reports:${{ github.workspace }}/TestResults/**/coverage.cobertura.xml -targetdir:${{ github.workspace }}/TestResults/CoverageReport -reporttypes:Cobertura
       
         # SonarQube Scan
       - name: SonarQube Scan
