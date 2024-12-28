@@ -66,7 +66,7 @@ jobs:
         run: |
           dotnet tool install --global dotnet-ef
           dotnet tool restore
-          dotnet ef database update -c ${{ secrets.AZURE_SQL_CONNECTION_STRING }} -p BethanysPieShop\BethanyPieShop.csproj
+          dotnet ef database update -c ${{ secrets.AZURE_SQL_CONNECTION_STRING }} -p BethanysPieShop/BethanyPieShop.csproj
         env:
           DOTNET_ROOT: /opt/hostedtoolcache/dotnet
           PATH: /opt/hostedtoolcache/dotnet:$PATH
