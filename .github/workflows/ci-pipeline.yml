@@ -61,6 +61,11 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: '${{ github.workspace }}/publish'
       
+      # Apply migrations
+      - name: Apply EF Core Migrations
+        run: |
+          dotnet ef database update --connection ${{ env.AZURE_SQL_CONNECTION_STRING }}
+      
       - name: logout
         run: |
           az logout
