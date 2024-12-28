@@ -1,4 +1,4 @@
-namespace BethanysPieShop.Models
+﻿namespace BethanysPieShop.Models
 {
     public interface IShoppingCart
     {

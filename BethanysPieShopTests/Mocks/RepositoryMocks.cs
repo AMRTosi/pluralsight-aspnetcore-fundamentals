@@ -1,5 +1,10 @@
-using BethanysPieShop.Models;
+﻿using BethanysPieShop.Models;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BethanysPieShopTests.Mocks
 {
@@ -193,7 +198,6 @@ namespace BethanysPieShopTests.Mocks
         }
 
         private static Dictionary<string, Category>? _categories;
-
         public static Dictionary<string, Category> Categories
         {
             get

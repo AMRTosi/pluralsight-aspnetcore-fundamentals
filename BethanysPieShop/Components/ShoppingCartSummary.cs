@@ -1,4 +1,4 @@
-using BethanysPieShop.Models;
+﻿using BethanysPieShop.Models;
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +15,8 @@ namespace BethanysPieShop.Components
 
         public IViewComponentResult Invoke()
         {
+            //var items = new List<ShoppingCartItem>() { new ShoppingCartItem(), new ShoppingCartItem() };
+
             var items = _shoppingCart.GetShoppingCartItems();
             _shoppingCart.ShoppingCartItems = items;
 

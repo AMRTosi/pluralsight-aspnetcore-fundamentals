@@ -1,4 +1,4 @@
-using BethanysPieShop.TagHelpers;
+﻿using BethanysPieShop.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Moq;
 using System;
@@ -34,5 +34,6 @@ namespace BethanysPieShopTests.TagHelpers
             Assert.Equal("a", tagHelperOutput.TagName);
             Assert.Equal("mailto:test@bethanyspieshop.com", tagHelperOutput.Attributes[0].Value);
         }
+
     }
 }

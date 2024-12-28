@@ -6,9 +6,12 @@
     <title>Bethany's Pie Shop</title>
     <link href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css'>
     <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <link href="~/css/site.css" rel="stylesheet" />
     <base href="/" />
+    @* <base href="~/" /> *@
 </head>
 <body>
     <div class="container">
@@ -29,7 +32,7 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <vc:category-menu></vc:category-menu>
-                             <li class="nav-item">
+                            <li class="nav-item">
                                 <a asp-controller="Contact" asp-action="Index" class="nav-link">Contact</a>
                             </li>
                         </ul>
@@ -42,6 +45,7 @@
                                 </a>
                             </li>
                         </ul>
+                         <partial name="_LoginPartial" />
                         <vc:shopping-cart-summary></vc:shopping-cart-summary>
                     </div>
                 </div>
@@ -49,6 +53,11 @@
         </header>
 
         @RenderBody()
+
+        <script src="_framework/blazor.web.js"></script>
+
+
+        @RenderSection("Scripts", required: false)
     </div>
 </body>
 </html>

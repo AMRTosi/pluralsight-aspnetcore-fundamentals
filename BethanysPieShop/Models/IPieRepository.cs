@@ -1,6 +1,4 @@
-using System;
-
-namespace BethanysPieShop.Models
+﻿namespace BethanysPieShop.Models
 {
     public interface IPieRepository
     {

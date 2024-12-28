@@ -1,5 +1,4 @@
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace BethanysPieShop.Models
 {
@@ -12,9 +11,21 @@ namespace BethanysPieShop.Models
             _bethanysPieShopDbContext = bethanysPieShopDbContext;
         }
 
-        public IEnumerable<Pie> AllPies => _bethanysPieShopDbContext.Pies.Include(p => p.Category);
+        public IEnumerable<Pie> AllPies
+        {
+            get
+            {
+                return _bethanysPieShopDbContext.Pies.Include(c => c.Category);
+            }
+        }
 
-        public IEnumerable<Pie> PiesOfTheWeek => _bethanysPieShopDbContext.Pies.Include(p => p.Category).Where(p => p.IsPieOfTheWeek);
+        public IEnumerable<Pie> PiesOfTheWeek
+        {
+            get
+            {
+                return _bethanysPieShopDbContext.Pies.Include(c => c.Category).Where(p => p.IsPieOfTheWeek);
+            }
+        }
 
         public Pie? GetPieById(int pieId)
         {
