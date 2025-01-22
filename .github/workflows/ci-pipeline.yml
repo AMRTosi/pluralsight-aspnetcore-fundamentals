@@ -62,11 +62,13 @@ jobs:
           package: '${{ github.workspace }}/publish'
       
       # Apply migrations
-      - name: Apply EF Core Migrations
+      - name: Install dotnet-ef tools
         run: |
-          dotnet tool install --global dotnet-ef --version 8.*
-          dotnet tool restore
-          dotnet ef database update -c ${{ secrets.AZURE_SQL_CONNECTION_STRING }} -p BethanysPieShop/BethanyPieShop.csproj
+          dotnet new tool-manifest
+          dotnet tool install dotnet-ef
+      - name: Apply EF Core Migrations
+        run: |          
+          dotnet tool run dotnet-ef database update -c ${{ secrets.AZURE_SQL_CONNECTION_STRING }} -p BethanysPieShop/BethanyPieShop.csproj
         env:
           DOTNET_ROOT: /opt/hostedtoolcache/dotnet
           PATH: /opt/hostedtoolcache/dotnet:$PATH
