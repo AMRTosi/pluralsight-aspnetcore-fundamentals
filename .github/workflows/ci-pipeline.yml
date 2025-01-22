@@ -68,6 +68,7 @@ jobs:
           dotnet tool install dotnet-ef
       - name: Apply EF Core Migrations
         run: |          
+          cd BethanysPieShop
           dotnet tool run dotnet-ef database update -c ${{ secrets.AZURE_SQL_CONNECTION_STRING }} -p BethanysPieShop/BethanyPieShop.csproj
         env:
           DOTNET_ROOT: /opt/hostedtoolcache/dotnet
