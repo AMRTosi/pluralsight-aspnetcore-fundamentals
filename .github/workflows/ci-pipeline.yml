@@ -54,10 +54,8 @@ jobs:
           pwd
           ls
       - name: Apply EF Core Migrations
-        run: |          
-          cd BethanysPieShop
-          ls
-          dotnet tool run dotnet-ef database update --connection "${{ secrets.AZURE_SQL_CONNECTION_STRING }}" --project BethanyPieShop.csproj --startup-project BethanyPieShop.csproj
+        run: |
+          dotnet tool run dotnet-ef database update --connection "${{ secrets.AZURE_SQL_CONNECTION_STRING }}" --project BethanysPieShop/BethanysPieShop.csproj --startup-project BethanysPieShop/BethanysPieShop.csproj
         env:
           DOTNET_ROOT: /opt/hostedtoolcache/dotnet
           PATH: /opt/hostedtoolcache/dotnet:$PATH
