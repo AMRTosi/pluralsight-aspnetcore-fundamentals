@@ -50,7 +50,9 @@ jobs:
           dotnet new tool-manifest
           dotnet tool install dotnet-ef
       - name: Print working directory
-        run: pwd
+        run: |          
+          pwd
+          ls
       - name: Apply EF Core Migrations
         run: |          
           dotnet tool run dotnet-ef database update --connection "${{ secrets.AZURE_SQL_CONNECTION_STRING }}" --project ./BethanysPieShop/BethanyPieShop.csproj --startup-project ./BethanysPieShop/BethanyPieShop.csproj
