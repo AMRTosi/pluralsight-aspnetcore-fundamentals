@@ -37,22 +37,41 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }} 
-      
+
+      # Run dotnet build and publish
+      - name: SonarScanner, build, test and coverage report
+        run: |
+          dotnet restore
+          dotnet tool install --global dotnet-coverage
+          dotnet tool install --global dotnet-sonarscanner --version 9.0.2
+          dotnet sonarscanner begin /k:"AMRTosi_pluralsight-aspnetcore-fundamentals" /o:"amrtosi" /d:sonar.token="f97d9dae9c74d696633e98b737ce3c17e061339f" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml"
+          dotnet build --configuration Release --no-incremental
+          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+          dotnet sonarscanner end /d:sonar.token="f97d9dae9c74d696633e98b737ce3c17e061339f"
+          
       # Run dotnet build and publish
       - name: SonarScanner, build, test and coverage report
         run: |
           dotnet restore          
           dotnet build --configuration Release --no-incremental      
-      
+
+      # Publish
+      - name: 'Publish the project'
+        run: dotnet publish -c Release --output ${{ github.workspace }}/publish
+          
+      # Deploy to Azure Web apps
+      - name: 'Run Azure webapp deploy action using publish profile credentials'
+        uses: azure/webapps-deploy@v3
+        with: 
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: '${{ github.workspace }}/publish'
+          
       # Apply migrations
       - name: Install dotnet-ef tools
         run: |
           dotnet new tool-manifest
           dotnet tool install dotnet-ef
-      - name: Print working directory
-        run: |          
-          pwd
-          ls
+      
       - name: Apply EF Core Migrations
         run: |
           dotnet tool run dotnet-ef database update --connection "${{ secrets.AZURE_SQL_CONNECTION_STRING }}" --project BethanysPieShop/BethanysPieShop.csproj --startup-project BethanysPieShop/BethanysPieShop.csproj
