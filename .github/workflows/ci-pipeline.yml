@@ -64,13 +64,13 @@ jobs:
       # Apply migrations
       - name: Apply EF Core Migrations
         run: |
-          dotnet tool install --global dotnet-ef
-          dotnet tool restore          
+          dotnet tool install --global dotnet-ef --version 8.*
+          dotnet tool restore
+          dotnet ef database update -c ${{ secrets.AZURE_SQL_CONNECTION_STRING }} -p BethanysPieShop/BethanyPieShop.csproj
         env:
           DOTNET_ROOT: /opt/hostedtoolcache/dotnet
           PATH: /opt/hostedtoolcache/dotnet:$PATH
-      
-      # dotnet ef database update -c ${{ secrets.AZURE_SQL_CONNECTION_STRING }} -p BethanysPieShop/BethanyPieShop.csproj
+          
       - name: logout
         run: |
           az logout
