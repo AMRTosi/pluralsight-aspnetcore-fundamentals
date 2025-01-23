@@ -40,7 +40,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}      
           
       # Run dotnet build and publish
-      - name: SonarScanner, build, test and coverage report
+      - name: Build, SonarScanner, Test, Coverage report and Publish
         run: |
           dotnet restore   
           dotnet tool install --global dotnet-coverage
@@ -49,9 +49,7 @@ jobs:
           dotnet build --configuration Release --no-incremental
           dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
           dotnet sonarscanner end /d:sonar.token="f97d9dae9c74d696633e98b737ce3c17e061339f"
-      
-      - name: Publish
-        run: dotnet publish BethanysPieShop/BethanysPieShop.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'      
+          dotnet publish BethanysPieShop/BethanysPieShop.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'      
           
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
