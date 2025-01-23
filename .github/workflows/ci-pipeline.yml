@@ -42,8 +42,8 @@ jobs:
       - name: SonarScanner, build, test and coverage report
         run: |
           dotnet restore          
-          dotnet build --configuration Release --no-incremental
-          dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
+          dotnet build --configuration Release --no-incremental          
+          dotnet publish BethanysPieShop/BethanysPieShop.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
 
       # Verify publish directory contents
       - name: Verify publish directory contents
